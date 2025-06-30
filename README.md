@@ -119,6 +119,14 @@ Response:
 {  
   "message": "Blood Test Report Analyser API is running"  
 }  
+
+
+
+
+OUTPUT :
+![crew1](https://github.com/user-attachments/assets/e27141e2-2e2d-4077-a21c-c76022645e86)
+
+
   
 
 
