@@ -76,16 +76,16 @@ Access the application:
 Web Interface
 1.	Upload PDF: Drag and drop your blood test PDF or click to browse
 2.	Analyze: Click "Analyze Blood Report" button
-3.	View Results: Review the three specialist analyses:
-•	Medical Analysis (health recommendations)
-•	Nutritional Recommendations (diet advice)
-•	Exercise Plan (workout suggestions)
-API Endpoints
-•	GET /: Serves the web frontend
-•	POST /analyze: Analyzes uploaded blood test PDF
-•	GET /api: API health check
-•	GET /test-sample: Tests analysis with sample PDF
-# API Documentation
+3.	View Results: Review the three specialist analyses:  
+•	Medical Analysis (health recommendations)  
+•	Nutritional Recommendations (diet advice)  
+•	Exercise Plan (workout suggestions)  
+API Endpoints  
+•	GET /: Serves the web frontend  
+•	POST /analyze: Analyzes uploaded blood test PDF  
+•	GET /api: API health check  
+•	GET /test-sample: Tests analysis with sample PDF  
+# API Documentation  
 POST /analyze
 Analyzes an uploaded blood test PDF file.
 Request:
