@@ -93,33 +93,33 @@ Request:
 •	Content-Type: multipart/form-data
 •	Parameters:
 o	file (required): PDF file of blood test report
-o	query (optional): Analysis query (default: "Summarise my Blood Test Report")
-Response:
-{
-  "status": "success",
-  "analysis": "MEDICAL ANALYSIS\n • Health recommendation 1\n • Health recommendation 2\n\nNUTRITIONAL RECOMMENDATIONS\n • Nutrition advice 1\n • Nutrition advice 2\n\nEXERCISE PLAN\n • Exercise suggestion 1\n • Exercise suggestion 2",
-  "file_name": "blood_test.pdf"
-}
-Error Response:
-{
-  "status": "error",
-  "detail": "Error message description"
-}
-GET /test-sample
-Tests the analysis system with the included sample PDF.
-Response:
-{
-  "status": "success",
-  "analysis": "Complete analysis of sample blood test...",
-  "file_name": "sample.pdf"
-}
-GET /api
-Health check endpoint for the API.
-Response:
-{
-  "message": "Blood Test Report Analyser API is running"
-}
-
+o	query (optional): Analysis query (default: "Summarise my Blood Test Report")  
+Response:  
+{  
+  "status": "success",  
+  "analysis": "MEDICAL ANALYSIS\n • Health recommendation 1\n • Health recommendation 2\n\nNUTRITIONAL RECOMMENDATIONS\n • Nutrition advice 1\n • Nutrition advice   2\n\nEXERCISE PLAN\n • Exercise suggestion 1\n • Exercise suggestion 2",  
+  "file_name": "blood_test.pdf"  
+}  
+Error Response:  
+{  
+  "status": "error",  
+  "detail": "Error message description"  
+}  
+GET /test-sample  
+Tests the analysis system with the included sample PDF.  
+Response:  
+{  
+  "status": "success",  
+  "analysis": "Complete analysis of sample blood test...",  
+  "file_name": "sample.pdf"  
+}  
+GET /api  
+Health check endpoint for the API.  
+Response:  
+{  
+  "message": "Blood Test Report Analyser API is running"  
+}  
+  
 
 
 
