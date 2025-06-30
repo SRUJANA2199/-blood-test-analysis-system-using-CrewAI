@@ -2,13 +2,13 @@
 
 
 # Features
-•	PDF Upload: 
-•	Multi-Specialist Analysis:
-o	Medical doctor analysis with health recommendations
-o	Nutritionist advice based on blood markers
-o	Exercise physiologist workout planning
-•	Interactive Web Interface
-•	Real-Time Analysis
+•	PDF Upload:      
+•	Multi-Specialist Analysis:   
+o	Medical doctor analysis with health recommendations       
+o	Nutritionist advice based on blood markers       
+o	Exercise physiologist workout planning       
+•	Interactive Web Interface        
+•	Real-Time Analysis            
 
 
 # Bugs Found and Fixes Applied
