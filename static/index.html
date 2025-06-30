@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Test Report Analyzer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .upload-section {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .upload-area {
+            border: 3px dashed #3498db;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 20px 0;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: #2980b9;
+            background: #e3f2fd;
+        }
+
+        .upload-area.dragover {
+            border-color: #27ae60;
+            background: #e8f5e8;
+        }
+
+        .upload-icon {
+            font-size: 4em;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+
+        .upload-text {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .selected-file {
+            background: #e8f5e8;
+            border: 2px solid #27ae60;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .file-icon {
+            font-size: 2em;
+            color: #27ae60;
+        }
+
+        .file-details h3 {
+            color: #27ae60;
+            margin-bottom: 5px;
+        }
+
+        .file-details p {
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .results {
+            display: none;
+            padding: 40px;
+            background: #f8f9fa;
+        }
+
+        .results h2 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2em;
+        }
+
+        .analysis-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #3498db;
+        }
+
+        .analysis-section h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            font-size: 1.8em;
+        }
+
+        .medical { border-left-color: #e74c3c; }
+        .medical .section-icon { color: #e74c3c; }
+
+        .nutrition { border-left-color: #f39c12; }
+        .nutrition .section-icon { color: #f39c12; }
+
+        .exercise { border-left-color: #27ae60; }
+        .exercise .section-icon { color: #27ae60; }
+
+        .analysis-content {
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .analysis-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .analysis-content li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .analysis-content li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .error {
+            background: #ffebee;
+            border: 2px solid #f44336;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #c62828;
+            display: none;
+        }
+
+        .new-analysis {
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .upload-section, .results {
+                padding: 20px;
+            }
+            
+            .analysis-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Blood Test Report Analyzer</h1>
+            <p>Upload your blood test PDF for comprehensive medical analysis</p>
+        </div>
+
+        <div class="upload-section" id="uploadSection">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📄</div>
+                <div class="upload-text">
+                    <strong>Drop your blood test PDF here</strong><br>
+                    or click to browse files
+                </div>
+                <input type="file" id="fileInput" class="file-input" accept=".pdf">
+                <button type="button" class="btn" onclick="document.getElementById('fileInput').click()">
+                    Choose PDF File
+                </button>
+            </div>
+
+            <div class="selected-file" id="selectedFile">
+                <div class="file-info">
+                    <div class="file-icon">📋</div>
+                    <div class="file-details">
+                        <h3 id="fileName">Selected File</h3>
+                        <p id="fileSize">File size</p>
+                    </div>
+                </div>
+                <button type="button" class="btn" id="analyzeBtn" onclick="analyzeReport()">
+                    Analyze Blood Report
+                </button>
+            </div>
+
+            <div class="error" id="errorMessage"></div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <h3>Analyzing your blood test report...</h3>
+            <p>Our medical specialists are reviewing your results</p>
+        </div>
+
+        <div class="results" id="results">
+            <h2>Analysis Results</h2>
+            
+            <div class="analysis-section medical">
+                <h3><span class="section-icon">👨‍⚕️</span>Medical Analysis</h3>
+                <div class="analysis-content" id="medicalAnalysis"></div>
+            </div>
+
+            <div class="analysis-section nutrition">
+                <h3><span class="section-icon">🥗</span>Nutritional Recommendations</h3>
+                <div class="analysis-content" id="nutritionAnalysis"></div>
+            </div>
+
+            <div class="analysis-section exercise">
+                <h3><span class="section-icon">💪</span>Exercise Plan</h3>
+                <div class="analysis-content" id="exerciseAnalysis"></div>
+            </div>
+
+            <div class="new-analysis">
+                <button type="button" class="btn" onclick="newAnalysis()">
+                    Analyze Another Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const selectedFile = document.getElementById('selectedFile');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const uploadSection = document.getElementById('uploadSection');
+        const loading = document.getElementById('loading');
+        const results = document.getElementById('results');
+        const errorMessage = document.getElementById('errorMessage');
+
+        let currentFile = null;
+
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+
+        // File input change
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        // Click to upload
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        function handleFileSelect(file) {
+            if (file.type !== 'application/pdf') {
+                showError('Please select a PDF file.');
+                return;
+            }
+
+            if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                showError('File size must be less than 10MB.');
+                return;
+            }
+
+            currentFile = file;
+            fileName.textContent = file.name;
+            fileSize.textContent = `${(file.size / 1024 / 1024).toFixed(2)} MB`;
+            selectedFile.style.display = 'block';
+            hideError();
+        }
+
+        async function analyzeReport() {
+            if (!currentFile) return;
+
+            // Show loading
+            uploadSection.style.display = 'none';
+            loading.style.display = 'block';
+            results.style.display = 'none';
+
+            const formData = new FormData();
+            formData.append('file', currentFile);
+            formData.append('query', 'Provide comprehensive analysis of this blood test report');
+
+            try {
+                const response = await fetch('/analyze', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    displayResults(data.analysis);
+                } else {
+                    throw new Error(data.detail || 'Analysis failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Failed to analyze the report. Please try again.');
+                uploadSection.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function displayResults(analysisText) {
+            const sections = parseAnalysis(analysisText);
+            
+            document.getElementById('medicalAnalysis').innerHTML = sections.medical;
+            document.getElementById('nutritionAnalysis').innerHTML = sections.nutrition;
+            document.getElementById('exerciseAnalysis').innerHTML = sections.exercise;
+            
+            results.style.display = 'block';
+        }
+
+        function parseAnalysis(text) {
+            const sections = {
+                medical: '',
+                nutrition: '',
+                exercise: ''
+            };
+
+            const lines = text.split('\n');
+            let currentSection = '';
+
+            for (const line of lines) {
+                if (line.includes('MEDICAL ANALYSIS')) {
+                    currentSection = 'medical';
+                } else if (line.includes('NUTRITIONAL RECOMMENDATIONS')) {
+                    currentSection = 'nutrition';
+                } else if (line.includes('EXERCISE PLAN')) {
+                    currentSection = 'exercise';
+                } else if (line.trim().startsWith('•') && currentSection) {
+                    const cleanLine = line.replace(/^•\s*/, '').trim();
+                    if (cleanLine) {
+                        sections[currentSection] += `<li>${cleanLine}</li>`;
+                    }
+                }
+            }
+
+            // Wrap in ul tags if content exists
+            Object.keys(sections).forEach(key => {
+                if (sections[key]) {
+                    sections[key] = `<ul>${sections[key]}</ul>`;
+                } else {
+                    sections[key] = '<p>No specific recommendations found for this section.</p>';
+                }
+            });
+
+            return sections;
+        }
+
+        function newAnalysis() {
+            currentFile = null;
+            fileInput.value = '';
+            selectedFile.style.display = 'none';
+            results.style.display = 'none';
+            uploadSection.style.display = 'block';
+            hideError();
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+
+        function hideError() {
+            errorMessage.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
