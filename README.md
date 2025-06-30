@@ -51,11 +51,11 @@ Fix Applied:
 
 # Setup and usage instructions
 Prerequisites
-•	Python 3.11 or higher
-•	pip package manager
-Install dependencies:
-pip install fastapi uvicorn pypdf python-dotenv python-multipart langchain-community
-Verify project structure:  
+•	Python 3.11 or higher  
+•	pip package manager  
+Install dependencies:  
+pip install fastapi uvicorn pypdf python-dotenv python-multipart langchain-community  
+Verify project structure:    
 ├── main.py                 # FastAPI application  
 ├── tools.py               # PDF processing tools  
 ├── static/  
@@ -67,9 +67,9 @@ Verify project structure:
 Start the server:  
 python main.py  
 
-Access the application:  
-•	Open your browser and go to: http://localhost:8000  
-•	Upload a blood test PDF and get instant analysis  
+Access the application:    
+•	Open your browser and go to: http://localhost:8000    
+•	Upload a blood test PDF and get instant analysis    
 
 
 # Usage Instructions  
