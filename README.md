@@ -1,7 +1,7 @@
 # -blood-test-analysis-system-using-CrewAI
 
 
-Features
+# Features
 •	PDF Upload: 
 •	Multi-Specialist Analysis:
 o	Medical doctor analysis with health recommendations
@@ -11,7 +11,7 @@ o	Exercise physiologist workout planning
 •	Real-Time Analysis
 
 
-Bugs Found and Fixes Applied
+# Bugs Found and Fixes Applied
 1.	FastAPI Server Startup Issues
 Problem: Server failed to start due to missing static file configuration and import errors.
 Fix Applied:
@@ -28,9 +28,6 @@ ModuleNotFoundError: No module named 'crewai_tools.tool'
 •	This means crewai_tools was installed, but the tool module wasn’t accessible — often due to:
 o	Incorrect version of the package
 o	Improper installation
-
-
-
 
 3. Missing Frontend Interface
 Problem: Application only provided API endpoints without user interface.
@@ -50,7 +47,7 @@ Fix Applied:
 •	Made the output format with clear section headers
 
 
-Setup and usage instructions
+# Setup and usage instructions
 Prerequisites
 •	Python 3.11 or higher
 •	pip package manager
@@ -72,7 +69,7 @@ Access the application:
 •	Upload a blood test PDF and get instant analysis
 
 
-Usage Instructions
+# Usage Instructions
 Web Interface
 1.	Upload PDF: Drag and drop your blood test PDF or click to browse
 2.	Analyze: Click "Analyze Blood Report" button
@@ -85,7 +82,7 @@ API Endpoints
 •	POST /analyze: Analyzes uploaded blood test PDF
 •	GET /api: API health check
 •	GET /test-sample: Tests analysis with sample PDF
-API Documentation
+# API Documentation
 POST /analyze
 Analyzes an uploaded blood test PDF file.
 Request:
