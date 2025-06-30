@@ -49,7 +49,7 @@ Fix Applied:
 •	Made the output format with clear section headers  
 
 
-# Setup and usage instructions
+# Setup instructions  
 Prerequisites
 •	Python 3.11 or higher  
 •	pip package manager  
